@@ -24,23 +24,25 @@ jobs:
 
     env:
       DEBUG: 1
-      SECRET_KEY: secrets.SECRET_KEY
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
       DJANGO_ALLOWED_HOSTS: "localhost 127.0.0.1 [::1]"
       POSTGRES_DB: taskdb
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
+
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
 
       - name: Build Docker image
         run: |
